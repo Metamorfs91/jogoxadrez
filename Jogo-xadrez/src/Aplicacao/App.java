@@ -1,10 +1,11 @@
 package Aplicacao;
 
-import Tabuleiro.Posicao;
+import Tabuleirojogo.Posicao;
+import Tabuleirojogo.Tabuleiro;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        Posicao pos = new Posicao(3, 5);
+        Tabuleiro tableiro = new Tabuleiro(8, 8);
     }
 
 }
