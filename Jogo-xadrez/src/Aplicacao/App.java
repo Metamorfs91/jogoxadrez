@@ -1,11 +1,11 @@
-package Aplicacao;
+package aplicacao;
 
-import Tabuleirojogo.Posicao;
-import Tabuleirojogo.Tabuleiro;
+import xadrez.XadrezPartida;
 
 public class App {
-    public static void main(String[] args) throws Exception {
-        Tabuleiro tableiro = new Tabuleiro(8, 8);
+    public static void main(String[] args) {
+        XadrezPartida xadrezPartida = new XadrezPartida();
+        UI.printTabuleiro(xadrezPartida.getPecas());
     }
 
 }

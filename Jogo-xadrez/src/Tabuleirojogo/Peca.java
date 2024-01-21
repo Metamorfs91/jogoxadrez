@@ -1,4 +1,4 @@
-package Tabuleirojogo;
+package tabuleirojogo;
 
 public class Peca {
     protected Posicao posicao;
@@ -6,10 +6,10 @@ public class Peca {
 
     public Peca(Tabuleiro tabuleiro) {
         this.tabuleiro = tabuleiro;
-        posicao = null;
+
     }
 
-    public Tabuleiro getTabuleiro() {
+    protected Tabuleiro getTabuleiro() {
         return tabuleiro;
     }
 
