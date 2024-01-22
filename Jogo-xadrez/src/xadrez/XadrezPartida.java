@@ -14,9 +14,9 @@ public class XadrezPartida {
     }
 
     public XadrezPeca[][] getPecas() {
-        XadrezPeca[][] mat = new XadrezPeca[tabuleiro.getLinha()][tabuleiro.getColuna()];
-        for (int i = 0; i < tabuleiro.getLinha(); i++) {
-            for (int j = 0; j < tabuleiro.getColuna(); j++) {
+        XadrezPeca[][] mat = new XadrezPeca[tabuleiro.getLinhas()][tabuleiro.getColunas()];
+        for (int i = 0; i < tabuleiro.getLinhas(); i++) {
+            for (int j = 0; j < tabuleiro.getColunas(); j++) {
                 mat[i][j] = (XadrezPeca) tabuleiro.peca(i, j);
             }
 
@@ -25,9 +25,9 @@ public class XadrezPartida {
     }
 
     private void configuracaoInicial() {
-        tabuleiro.pecaLugar(new Torre(tabuleiro, Color.BRANCO), new Posicao(2, 1));
+        tabuleiro.pecaLugar(new Torre(tabuleiro, Color.BRANCO), new Posicao(2, 4));
         tabuleiro.pecaLugar(new Rei(tabuleiro, Color.PRETO), new Posicao(0, 4));
-        tabuleiro.pecaLugar(new Rei(tabuleiro, Color.BRANCO), new Posicao(7, 4));
+        tabuleiro.pecaLugar(new Rei(tabuleiro, Color.BRANCO), new Posicao(0, 0));
 
     }
 }
