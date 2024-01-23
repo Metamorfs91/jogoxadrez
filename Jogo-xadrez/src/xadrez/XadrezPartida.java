@@ -41,8 +41,13 @@ public class XadrezPartida {
     }
 
     private void validarPosicaoInicial(Posicao posicao) {
-        if (!tabuleiro.existePeca(posicao))
+        if (!tabuleiro.existePeca(posicao)) {
             throw new XadrezExcecao("nao existe peca na posicao de origem");
+        }
+
+        if (!tabuleiro.peca(posicao).existeAlgumMovimentoPossivel()) {
+            throw new XadrezExcecao("Nao existe movimentos possiveis para a peca escolhida");
+        }
     }
 
     private void novaPecaLugar(char coluna, int linha, XadrezPeca peca) {
@@ -50,9 +55,9 @@ public class XadrezPartida {
     }
 
     private void configuracaoInicial() {
-        novaPecaLugar('d', 8, new Torre(tabuleiro, Color.BLACK));
-        novaPecaLugar('e', 8, new Rei(tabuleiro, Color.BLACK));
-        novaPecaLugar('e', 1, new Rei(tabuleiro, Color.WHITE));
+        novaPecaLugar('d', 8, new Rei(tabuleiro, Color.BLACK));
+        novaPecaLugar('e', 8, new Torre(tabuleiro, Color.BLACK));
+        novaPecaLugar('e', 1, new Torre(tabuleiro, Color.WHITE));
 
         novaPecaLugar('c', 1, new Torre(tabuleiro, Color.WHITE));
         novaPecaLugar('c', 2, new Torre(tabuleiro, Color.WHITE));
@@ -64,6 +69,5 @@ public class XadrezPartida {
         novaPecaLugar('c', 8, new Torre(tabuleiro, Color.BLACK));
         novaPecaLugar('d', 7, new Torre(tabuleiro, Color.BLACK));
         novaPecaLugar('e', 7, new Torre(tabuleiro, Color.BLACK));
-
     }
 }
