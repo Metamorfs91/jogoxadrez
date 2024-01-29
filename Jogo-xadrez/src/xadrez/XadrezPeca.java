@@ -1,6 +1,7 @@
 package xadrez;
 
 import tabuleirojogo.Peca;
+import tabuleirojogo.Posicao;
 import tabuleirojogo.Tabuleiro;
 
 public abstract class XadrezPeca extends Peca {
@@ -15,4 +16,8 @@ public abstract class XadrezPeca extends Peca {
         return color;
     }
 
+    protected boolean haPecaAdversaria(Posicao posicao) {
+        XadrezPeca p = (XadrezPeca) getTabuleiro().peca(posicao);
+        return p != null && p.getColor() != color;
+    }
 }
