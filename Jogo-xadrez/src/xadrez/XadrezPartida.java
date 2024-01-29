@@ -26,7 +26,8 @@ public class XadrezPartida {
     }
 
     public boolean[][] possiveisMovimentos(XadrezPosicao origemPosicao) {
-        Posicao posicao = origemPosicao.toPosicao();
+        Posicao posicao = origemPosicao
+                .toPosicao();
         validarPosicaoInicial(posicao);
         return tabuleiro.peca(posicao).possiveisMovimentos();
     }
