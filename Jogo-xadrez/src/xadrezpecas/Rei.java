@@ -50,7 +50,7 @@ public class Rei extends XadrezPeca {
         if (getTabuleiro().posicaoExistente(p) && podeMover(p)) {
             mat[p.getLinha()][p.getColuna()] = true;
         }
-        // noroesta
+        // noroest
         p.setValores(posicao.getLinha() - 1, posicao.getColuna() - 1);
         if (getTabuleiro().posicaoExistente(p) && podeMover(p)) {
             mat[p.getLinha()][p.getColuna()] = true;

@@ -41,6 +41,7 @@ public class Torre extends XadrezPeca {
         if (getTabuleiro().posicaoExistente(p) && haPecaAdversaria(p)) {
             mat[p.getLinha()][p.getColuna()] = true;
         }
+        // para direita
         p.setValores(posicao.getLinha(), posicao.getColuna() + 1);
         while (getTabuleiro().posicaoExistente(p) && !getTabuleiro().existePeca(p)) {
             mat[p.getLinha()][p.getColuna()] = true;
@@ -54,7 +55,7 @@ public class Torre extends XadrezPeca {
         p.setValores(posicao.getLinha() + 1, posicao.getColuna());
         while (getTabuleiro().posicaoExistente(p) && !getTabuleiro().existePeca(p)) {
             mat[p.getLinha()][p.getColuna()] = true;
-            p.setColuna(p.getColuna() + 1);
+            p.setLinha(p.getLinha() + 1);
         }
         if (getTabuleiro().posicaoExistente(p) && haPecaAdversaria(p)) {
             mat[p.getLinha()][p.getColuna()] = true;
