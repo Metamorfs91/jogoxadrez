@@ -32,6 +32,7 @@ public class App {
                 System.out.println();
                 System.out.print("Alvo ");
                 XadrezPosicao alvo = UI.readXadrezPosicao(sc);
+
                 XadrezPeca pecaCapturada = xadrezPartida.movimentoPecaXadrez(origem, alvo);
 
                 if (pecaCapturada != null) {
