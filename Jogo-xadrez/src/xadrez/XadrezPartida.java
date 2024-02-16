@@ -17,6 +17,9 @@ public class XadrezPartida {
 
     private Tabuleiro tabuleiro;
     private boolean check;
+
+    private boolean checkMate;
+
     private List<Peca> pecasNoTabuleiro = new ArrayList<>();
     private List<Peca> pecasCapturadas = new ArrayList<>();
 
@@ -38,6 +41,10 @@ public class XadrezPartida {
 
     public boolean getCheck() {
         return check;
+    }
+
+    public boolean getCheckMate() {
+        return checkMate;
     }
 
     public XadrezPeca[][] getPecas() {
@@ -70,7 +77,12 @@ public class XadrezPartida {
         }
         check = (testeCheck(opponent(atualJogador))) ? true : false;
 
-        proximoTurno();
+        if (testeCheckMate(opponent(atualJogador))) {
+            checkMate = true;
+        } else {
+            proximoTurno();
+        }
+
         return (XadrezPeca) pecaCapturada;
     }
 
@@ -147,6 +159,34 @@ public class XadrezPartida {
             }
         }
         return false;
+    }
+
+    private boolean testeCheckMate(Color color) {
+        if (!testeCheck(color)) {
+            return false;
+        }
+        List<Peca> list = pecasNoTabuleiro.stream().filter(x -> ((XadrezPeca) x).getColor() == color)
+                .collect(Collectors.toList());
+        for (Peca p : list) {
+            boolean[][] mat = p.possiveisMovimentos();
+            for (int i = 0; i < tabuleiro.getLinhas(); i++) {
+                for (int j = 0; j < tabuleiro.getColunas(); j++) {
+                    if (mat[i][j]) {
+                        Posicao origem = ((XadrezPeca) p).getXadrezPosicao().toPosicao();
+                        Posicao alvo = new Posicao(i, j);
+                        Peca capturadaPeca = fazerMovimento(origem, alvo);
+                        boolean testeCheck = testeCheck(color);
+                        desfazerMovimento(origem, alvo, capturadaPeca);
+
+                        if (!testeCheck) {
+                            return false;
+                        }
+
+                    }
+                }
+            }
+        }
+        return true;
     }
 
     private void novaPecaLugar(char coluna, int linha, XadrezPeca peca) {
