@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 import tabuleirojogo.Peca;
 import tabuleirojogo.Posicao;
 import tabuleirojogo.Tabuleiro;
+import xadrezpecas.Bispo;
+import xadrezpecas.Peao;
 import xadrezpecas.Rei;
 import xadrezpecas.Torre;
 
@@ -87,7 +89,10 @@ public class XadrezPartida {
     }
 
     private Peca fazerMovimento(Posicao origem, Posicao alvo) {
-        Peca p = tabuleiro.removerPeca(origem);
+
+        XadrezPeca p = (XadrezPeca) tabuleiro.removerPeca(origem);
+        p.aumentarContador();
+
         Peca pecaCapturada = tabuleiro.removerPeca(alvo);
         tabuleiro.pecaLugar(p, alvo);
 
@@ -99,7 +104,8 @@ public class XadrezPartida {
     }
 
     private void desfazerMovimento(Posicao origem, Posicao alvo, Peca pecaCapturada) {
-        Peca p = tabuleiro.removerPeca(alvo);
+        XadrezPeca p = (XadrezPeca) tabuleiro.removerPeca(alvo);
+        p.diminuirContadorMovimento();
         tabuleiro.pecaLugar(p, origem);
 
         if (pecaCapturada != null) {
@@ -195,19 +201,37 @@ public class XadrezPartida {
     }
 
     private void configuracaoInicial() {
-        novaPecaLugar('d', 8, new Rei(tabuleiro, Color.BLACK));
-        novaPecaLugar('e', 8, new Torre(tabuleiro, Color.BLACK));
-        novaPecaLugar('e', 1, new Torre(tabuleiro, Color.WHITE));
+        novaPecaLugar('a', 1, new Torre(tabuleiro, Color.WHITE));
+        novaPecaLugar('c', 1, new Bispo(tabuleiro, Color.WHITE));
+        novaPecaLugar('e', 1, new Rei(tabuleiro, Color.WHITE));
+        novaPecaLugar('f', 1, new Bispo(tabuleiro, Color.WHITE));
+        novaPecaLugar('h', 1, new Torre(tabuleiro, Color.WHITE));
 
-        novaPecaLugar('c', 1, new Torre(tabuleiro, Color.WHITE));
-        novaPecaLugar('c', 2, new Torre(tabuleiro, Color.WHITE));
-        novaPecaLugar('d', 2, new Torre(tabuleiro, Color.WHITE));
-        novaPecaLugar('e', 2, new Torre(tabuleiro, Color.WHITE));
-        novaPecaLugar('d', 1, new Rei(tabuleiro, Color.WHITE));
+        novaPecaLugar('a', 2, new Peao(tabuleiro, Color.WHITE));
+        novaPecaLugar('b', 2, new Peao(tabuleiro, Color.WHITE));
+        novaPecaLugar('c', 2, new Peao(tabuleiro, Color.WHITE));
+        novaPecaLugar('d', 2, new Peao(tabuleiro, Color.WHITE));
+        novaPecaLugar('e', 2, new Peao(tabuleiro, Color.WHITE));
 
-        novaPecaLugar('c', 7, new Torre(tabuleiro, Color.BLACK));
-        novaPecaLugar('c', 8, new Torre(tabuleiro, Color.BLACK));
-        novaPecaLugar('d', 7, new Torre(tabuleiro, Color.BLACK));
-        novaPecaLugar('e', 7, new Torre(tabuleiro, Color.BLACK));
+        novaPecaLugar('f', 2, new Peao(tabuleiro, Color.WHITE));
+        novaPecaLugar('g', 2, new Peao(tabuleiro, Color.WHITE));
+        novaPecaLugar('h', 2, new Peao(tabuleiro, Color.WHITE));
+
+        novaPecaLugar('a', 8, new Torre(tabuleiro, Color.BLACK));
+        novaPecaLugar('c', 8, new Bispo(tabuleiro, Color.BLACK));
+        novaPecaLugar('e', 8, new Rei(tabuleiro, Color.BLACK));
+        novaPecaLugar('f', 8, new Bispo(tabuleiro, Color.BLACK));
+        novaPecaLugar('h', 8, new Torre(tabuleiro, Color.BLACK));
+
+        novaPecaLugar('a', 7, new Peao(tabuleiro, Color.BLACK));
+        novaPecaLugar('b', 7, new Peao(tabuleiro, Color.BLACK));
+        novaPecaLugar('c', 7, new Peao(tabuleiro, Color.BLACK));
+        novaPecaLugar('d', 7, new Peao(tabuleiro, Color.BLACK));
+        novaPecaLugar('e', 7, new Peao(tabuleiro, Color.BLACK));
+
+        novaPecaLugar('f', 7, new Peao(tabuleiro, Color.BLACK));
+        novaPecaLugar('g', 7, new Peao(tabuleiro, Color.BLACK));
+        novaPecaLugar('h', 7, new Peao(tabuleiro, Color.BLACK));
+
     }
 }

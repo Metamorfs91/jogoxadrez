@@ -60,10 +60,10 @@ public class UI {
             System.out.println("Aguardando Player: " + xadrezPartida.getatualJogador());
             if (xadrezPartida.getCheck()) {
                 System.out.println("CHECK!");
-            } else {
-                System.out.println("CHACKMATE!");
-                System.out.println("Vencedor: " + xadrezPartida.getatualJogador());
             }
+        } else {
+            System.out.println("CHACKMATE!");
+            System.out.println("Vencedor: " + xadrezPartida.getatualJogador());
         }
     }
 
