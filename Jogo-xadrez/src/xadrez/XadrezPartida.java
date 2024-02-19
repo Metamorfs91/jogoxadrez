@@ -10,6 +10,7 @@ import tabuleirojogo.Tabuleiro;
 import xadrezpecas.Bispo;
 import xadrezpecas.Cavalo;
 import xadrezpecas.Peao;
+import xadrezpecas.Rainha;
 import xadrezpecas.Rei;
 import xadrezpecas.Torre;
 
@@ -205,6 +206,7 @@ public class XadrezPartida {
         novaPecaLugar('a', 1, new Torre(tabuleiro, Color.WHITE));
         novaPecaLugar('b', 1, new Cavalo(tabuleiro, Color.WHITE));
         novaPecaLugar('c', 1, new Bispo(tabuleiro, Color.WHITE));
+        novaPecaLugar('d', 1, new Rainha(tabuleiro, Color.WHITE));
         novaPecaLugar('e', 1, new Rei(tabuleiro, Color.WHITE));
         novaPecaLugar('f', 1, new Bispo(tabuleiro, Color.WHITE));
         novaPecaLugar('g', 1, new Cavalo(tabuleiro, Color.WHITE));
@@ -223,6 +225,7 @@ public class XadrezPartida {
         novaPecaLugar('a', 8, new Torre(tabuleiro, Color.BLACK));
         novaPecaLugar('b', 8, new Cavalo(tabuleiro, Color.BLACK));
         novaPecaLugar('c', 8, new Bispo(tabuleiro, Color.BLACK));
+        novaPecaLugar('d', 8, new Rainha(tabuleiro, Color.BLACK));
         novaPecaLugar('e', 8, new Rei(tabuleiro, Color.BLACK));
         novaPecaLugar('f', 8, new Bispo(tabuleiro, Color.BLACK));
         novaPecaLugar('g', 8, new Cavalo(tabuleiro, Color.BLACK));
