@@ -86,6 +86,7 @@ public class XadrezPartida {
         } else {
             proximoTurno();
         }
+        // movimento Especial
 
         return (XadrezPeca) pecaCapturada;
     }
@@ -102,6 +103,23 @@ public class XadrezPartida {
             pecasNoTabuleiro.remove(pecaCapturada);
             pecasCapturadas.add(pecaCapturada);
         }
+
+        // movimento especialrook pequeno
+        if (p instanceof Rei && alvo.getColuna() == origem.getColuna() + 2) {
+            Posicao origemT = new Posicao(origem.getLinha(), origem.getColuna() + 3);
+            Posicao alvoT = new Posicao(origem.getLinha(), origem.getColuna() + 1);
+            XadrezPeca torre = (XadrezPeca) tabuleiro.removerPeca(origemT);
+            tabuleiro.pecaLugar(torre, alvoT);
+            torre.aumentarContador();
+        }
+        // movimento especial rook grande
+        if (p instanceof Rei && alvo.getColuna() == origem.getColuna() - 2) {
+            Posicao origemT = new Posicao(origem.getLinha(), origem.getColuna() - 4);
+            Posicao alvoT = new Posicao(origem.getLinha(), origem.getColuna() - 1);
+            XadrezPeca torre = (XadrezPeca) tabuleiro.removerPeca(origemT);
+            tabuleiro.pecaLugar(torre, alvoT);
+            torre.aumentarContador();
+        }
         return pecaCapturada;
     }
 
@@ -114,6 +132,22 @@ public class XadrezPartida {
             tabuleiro.pecaLugar(pecaCapturada, alvo);
             pecasCapturadas.remove(pecaCapturada);
             pecasNoTabuleiro.add(pecaCapturada);
+        }
+        // movimento especialrook pequeno
+        if (p instanceof Rei && alvo.getColuna() == origem.getColuna() + 2) {
+            Posicao origemT = new Posicao(origem.getLinha(), origem.getColuna() + 3);
+            Posicao alvoT = new Posicao(origem.getLinha(), origem.getColuna() + 1);
+            XadrezPeca torre = (XadrezPeca) tabuleiro.removerPeca(alvoT);
+            tabuleiro.pecaLugar(torre, origemT);
+            torre.diminuirContadorMovimento();
+        }
+        // movimento especial rook grande
+        if (p instanceof Rei && alvo.getColuna() == origem.getColuna() - 2) {
+            Posicao origemT = new Posicao(origem.getLinha(), origem.getColuna() - 4);
+            Posicao alvoT = new Posicao(origem.getLinha(), origem.getColuna() - 1);
+            XadrezPeca torre = (XadrezPeca) tabuleiro.removerPeca(alvoT);
+            tabuleiro.pecaLugar(torre, origemT);
+            torre.diminuirContadorMovimento();
         }
     }
 
@@ -207,7 +241,7 @@ public class XadrezPartida {
         novaPecaLugar('b', 1, new Cavalo(tabuleiro, Color.WHITE));
         novaPecaLugar('c', 1, new Bispo(tabuleiro, Color.WHITE));
         novaPecaLugar('d', 1, new Rainha(tabuleiro, Color.WHITE));
-        novaPecaLugar('e', 1, new Rei(tabuleiro, Color.WHITE));
+        novaPecaLugar('e', 1, new Rei(tabuleiro, Color.WHITE, this));
         novaPecaLugar('f', 1, new Bispo(tabuleiro, Color.WHITE));
         novaPecaLugar('g', 1, new Cavalo(tabuleiro, Color.WHITE));
         novaPecaLugar('h', 1, new Torre(tabuleiro, Color.WHITE));
@@ -226,7 +260,7 @@ public class XadrezPartida {
         novaPecaLugar('b', 8, new Cavalo(tabuleiro, Color.BLACK));
         novaPecaLugar('c', 8, new Bispo(tabuleiro, Color.BLACK));
         novaPecaLugar('d', 8, new Rainha(tabuleiro, Color.BLACK));
-        novaPecaLugar('e', 8, new Rei(tabuleiro, Color.BLACK));
+        novaPecaLugar('e', 8, new Rei(tabuleiro, Color.BLACK, this));
         novaPecaLugar('f', 8, new Bispo(tabuleiro, Color.BLACK));
         novaPecaLugar('g', 8, new Cavalo(tabuleiro, Color.BLACK));
         novaPecaLugar('h', 8, new Torre(tabuleiro, Color.BLACK));
