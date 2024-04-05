@@ -23,6 +23,7 @@ public class XadrezPartida {
     private boolean check;
 
     private boolean checkMate;
+    private XadrezPeca enPassantVunerable;
 
     private List<Peca> pecasNoTabuleiro = new ArrayList<>();
     private List<Peca> pecasCapturadas = new ArrayList<>();
@@ -49,6 +50,10 @@ public class XadrezPartida {
 
     public boolean getCheckMate() {
         return checkMate;
+    }
+
+    public XadrezPeca getEnpassantVunarable() {
+        return enPassantVunerable;
     }
 
     public XadrezPeca[][] getPecas() {
@@ -79,12 +84,25 @@ public class XadrezPartida {
             desfazerMovimento(origem, alvo, pecaCapturada);
             throw new XadrezExcecao("Voçê não pode fazer este movimento !");
         }
+
+        XadrezPeca moverdPeca = (XadrezPeca) tabuleiro.peca(alvo);
+
         check = (testeCheck(opponent(atualJogador))) ? true : false;
 
         if (testeCheckMate(opponent(atualJogador))) {
             checkMate = true;
         } else {
             proximoTurno();
+        }
+
+        // #especialMovimento enPassant
+
+        if (moverdPeca instanceof Peao
+                && (alvo.getLinha() == origem.getLinha() - 2 || alvo.getLinha() == origem.getLinha() + 2)) {
+            enPassantVunerable = moverdPeca;
+
+        } else {
+            enPassantVunerable = null;
         }
         // movimento Especial
 
@@ -120,6 +138,21 @@ public class XadrezPartida {
             tabuleiro.pecaLugar(torre, alvoT);
             torre.aumentarContador();
         }
+        // movimento especial en passant
+        if (p instanceof Peao) {
+            if (origem.getColuna() != alvo.getColuna() && pecaCapturada == null) {
+                Posicao peaoPosicao;
+                if (p.getColor() == Color.WHITE) {
+                    peaoPosicao = new Posicao(alvo.getLinha() + 1, alvo.getColuna());
+                } else {
+                    peaoPosicao = new Posicao(alvo.getLinha() - 1, alvo.getColuna());
+                }
+                pecaCapturada = tabuleiro.removerPeca(peaoPosicao);
+                pecasCapturadas.add(pecaCapturada);
+                pecasNoTabuleiro.remove(pecaCapturada);
+            }
+        }
+
         return pecaCapturada;
     }
 
@@ -149,6 +182,22 @@ public class XadrezPartida {
             tabuleiro.pecaLugar(torre, origemT);
             torre.diminuirContadorMovimento();
         }
+        // especialmovimento en passant
+        if (p instanceof Peao) {
+            if (origem.getColuna() != alvo.getColuna() && pecaCapturada == enPassantVunerable) {
+
+                XadrezPeca peao = (XadrezPeca) tabuleiro.removerPeca(alvo);
+                Posicao peaPosicao;
+                if (p.getColor() == Color.WHITE) {
+                    peaPosicao = new Posicao(3, alvo.getColuna());
+                } else {
+                    peaPosicao = new Posicao(4, alvo.getColuna());
+                }
+                tabuleiro.pecaLugar(peao, peaPosicao);
+
+            }
+        }
+
     }
 
     private void validarPosicaoInicial(Posicao posicao) {
@@ -246,15 +295,15 @@ public class XadrezPartida {
         novaPecaLugar('g', 1, new Cavalo(tabuleiro, Color.WHITE));
         novaPecaLugar('h', 1, new Torre(tabuleiro, Color.WHITE));
 
-        novaPecaLugar('a', 2, new Peao(tabuleiro, Color.WHITE));
-        novaPecaLugar('b', 2, new Peao(tabuleiro, Color.WHITE));
-        novaPecaLugar('c', 2, new Peao(tabuleiro, Color.WHITE));
-        novaPecaLugar('d', 2, new Peao(tabuleiro, Color.WHITE));
-        novaPecaLugar('e', 2, new Peao(tabuleiro, Color.WHITE));
+        novaPecaLugar('a', 2, new Peao(tabuleiro, Color.WHITE, this));
+        novaPecaLugar('b', 2, new Peao(tabuleiro, Color.WHITE, this));
+        novaPecaLugar('c', 2, new Peao(tabuleiro, Color.WHITE, this));
+        novaPecaLugar('d', 2, new Peao(tabuleiro, Color.WHITE, this));
+        novaPecaLugar('e', 2, new Peao(tabuleiro, Color.WHITE, this));
 
-        novaPecaLugar('f', 2, new Peao(tabuleiro, Color.WHITE));
-        novaPecaLugar('g', 2, new Peao(tabuleiro, Color.WHITE));
-        novaPecaLugar('h', 2, new Peao(tabuleiro, Color.WHITE));
+        novaPecaLugar('f', 2, new Peao(tabuleiro, Color.WHITE, this));
+        novaPecaLugar('g', 2, new Peao(tabuleiro, Color.WHITE, this));
+        novaPecaLugar('h', 2, new Peao(tabuleiro, Color.WHITE, this));
 
         novaPecaLugar('a', 8, new Torre(tabuleiro, Color.BLACK));
         novaPecaLugar('b', 8, new Cavalo(tabuleiro, Color.BLACK));
@@ -265,15 +314,15 @@ public class XadrezPartida {
         novaPecaLugar('g', 8, new Cavalo(tabuleiro, Color.BLACK));
         novaPecaLugar('h', 8, new Torre(tabuleiro, Color.BLACK));
 
-        novaPecaLugar('a', 7, new Peao(tabuleiro, Color.BLACK));
-        novaPecaLugar('b', 7, new Peao(tabuleiro, Color.BLACK));
-        novaPecaLugar('c', 7, new Peao(tabuleiro, Color.BLACK));
-        novaPecaLugar('d', 7, new Peao(tabuleiro, Color.BLACK));
-        novaPecaLugar('e', 7, new Peao(tabuleiro, Color.BLACK));
+        novaPecaLugar('a', 7, new Peao(tabuleiro, Color.BLACK, this));
+        novaPecaLugar('b', 7, new Peao(tabuleiro, Color.BLACK, this));
+        novaPecaLugar('c', 7, new Peao(tabuleiro, Color.BLACK, this));
+        novaPecaLugar('d', 7, new Peao(tabuleiro, Color.BLACK, this));
+        novaPecaLugar('e', 7, new Peao(tabuleiro, Color.BLACK, this));
 
-        novaPecaLugar('f', 7, new Peao(tabuleiro, Color.BLACK));
-        novaPecaLugar('g', 7, new Peao(tabuleiro, Color.BLACK));
-        novaPecaLugar('h', 7, new Peao(tabuleiro, Color.BLACK));
+        novaPecaLugar('f', 7, new Peao(tabuleiro, Color.BLACK, this));
+        novaPecaLugar('g', 7, new Peao(tabuleiro, Color.BLACK, this));
+        novaPecaLugar('h', 7, new Peao(tabuleiro, Color.BLACK, this));
 
     }
 }
