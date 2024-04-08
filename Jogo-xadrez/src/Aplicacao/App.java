@@ -41,7 +41,7 @@ public class App {
                 if (xadrezPartida.getPromocao() != null) {
                     System.out.print("Digite a peca para promocao (B/C/T/Q): ");
                     String type = sc.nextLine().toUpperCase();
-                    while (!type.equals("B") && type.equals("C") && type.equals("T") && !type.equals("Q")) {
+                    while (!type.equals("B") && !type.equals("N") && !type.equals("R") & !type.equals("Q")) {
                         System.out.print("valor invalido !  Digite a peca para promocao (B/C/T/Q): ");
                         type = sc.nextLine().toUpperCase();
                     }
